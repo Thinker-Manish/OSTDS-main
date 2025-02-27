@@ -1,74 +1,67 @@
-## 📌 Project Overview
+## Project
 
-# Data Analysis and Visualisation (COVID - 19)
+## 📌 Table of Contents
 
-Have perform tasks like loading of data, cleaning it, and analysis on covid - 19 data. Created logger file to get the logs which helps in finding the error. And then we can solve it.
+1️⃣ Project Overview  
+2️⃣ Assignment 1: COVID-19 Data Analysis & Dashboard  
+3️⃣ Assignment 2: Sports Statistics Scraping & Analysis  
+4️⃣ Technologies Used
+5️⃣ Author
 
-# 📂 Folder structure
+---
 
-- **Create License file**
-- **Create requirements.txt**
-- **Create docs folder**
-- **create src folder**
-- **tests folder**
-- **config folder**
-- **data folder**
+## 🔹 Project Overview
 
-# COVID-19 Data Dashboard
+This project contains two assignments focused on data analysis, visualization, and web scraping.
 
-The **COVID-19 Data Dashboard** is a web-based application built using **Django, Matplotlib, and Seaborn** to visualize key pandemic trends in the United States. It provides **interactive data visualizations** with filtering options, allowing users to analyze COVID-19 cases, fatality rates, recovery trends, and correlations dynamically.
+📊 **Assignment 1 - PYTHON AND DJANGO**: Analyze and visualize COVID-19 data while developing an interactive dashboard using Django.  
+⚽ **Assignment 2 - JUPYTER**: Scrape Premier League player statistics and perform data analysis using Jupyter Notebook.
 
-## ✨ Features
+---
 
-### 📊 Interactive Data Visualizations
+## 🦠 Assignment 1: COVID-19 Data Analysis & Dashboard
 
-- **Case Fatality Ratio Histogram** – Displays the distribution of case fatality rates across different regions.
-- **Correlation Matrix Heatmap** – Highlights relationships between key COVID-19 metrics.
-- **Daily Cases Trend** – Line chart showing the trend of confirmed cases over time.
-- **Top N States by Case Type** – Bar chart ranking states based on selected case type (Confirmed, Deaths, Recovered, Active).
-- **Recovery Rate Analysis** – Histogram visualizing the distribution of recovery rates.
-- **Active vs. Confirmed Cases Comparison** – Scatter plot analyzing the correlation between active and confirmed cases.
+### 🎯 Objective
 
-### 🔥 Dynamic Filters & Real-Time Updates
+Perform in-depth data analysis and visualization on COVID-19 datasets and develop a Django-based dashboard to display insights.
 
-- **State Selection** – Filter data by a specific state or view nationwide statistics.
-- **Case Type Selection** – Choose between Confirmed, Deaths, Recovered, and Active cases for analysis.
-- **Top N States Selection** – Customize the number of states displayed in rankings.
-- **AJAX-based Chart Updates** – Charts refresh dynamically without reloading the page.
+### ✅ Tasks
 
-### 🎨 Modern & Responsive UI
+✔ Load and clean COVID-19 data  
+✔ Conduct Exploratory Data Analysis (EDA)  
+✔ Generate various visualizations (histograms, heatmaps, line charts)  
+✔ Implement ARIMA-based time series forecasting  
+✔ Build an interactive Django dashboard
 
-- **Dark-themed dashboard** for a sleek and professional look.
-- **Grid-based layout** for optimal organization of charts.
-- **Hover effects & animations** for enhanced user experience.
-- **Mobile-friendly design** for seamless viewing on any device.
+---
 
-### 🛠️ Built With
+## ⚽ Assignment 2: Sports Statistics Scraping & Analysis
 
-- **Django** – Backend framework for handling data and rendering views.
-- **Matplotlib & Seaborn** – Data visualization libraries for generating charts.
-- **Pandas** – Data manipulation and analysis.
-- **AJAX & jQuery** – Asynchronous updates for a smooth user experience.
-- **HTML, CSS & JavaScript** – Frontend technologies for an interactive UI.
+### 🎯 Objective
 
-## **Requirements**
+Scrape and analyze Premier League player statistics using Python and Jupyter Notebook.
 
-### 🏃‍♂️‍➡️ To run this project locally, you'll need the following installed:
+### ✅ Tasks
 
-- **numpy**
-- **pandas**
-- **matplotlib**
-- **seaborn**
-- **requests**
-- **beautifulsoup4**
-- **django**
+✔ Scrape player statistics (goals, assists, clean sheets, etc.) from ESPN or SportsReference  
+✔ Process and clean the scraped data  
+✔ Analyze player performances and trends  
+✔ Generate insightful visualizations with Matplotlib and Seaborn
 
-### ⬇️ You can install the dependencies by running:
+---
 
-```bash
-pip install -r requirements.txt
-```
+### 🛠 Technologies Used
+
+- 🚀 Programming Languages: Python
+- 📊 Libraries & Frameworks: Django, Matplotlib, Seaborn, Pandas, NumPy, BeautifulSoup
+- 💻 Development Tools: Jupyter Notebook, Eclipse, VS Code
+
+### ✍️ Author
+
+**Name** - **Aquil Iqbal**
+
+- Developed as part of a data analysis and web scraping project.
 
 ### 📜 License
 
-This project is open-source and available under the MIT License.
+- This project is open-source and available under the MIT License.
