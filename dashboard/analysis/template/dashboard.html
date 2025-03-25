@@ -1,0 +1,251 @@
+<!-- 
+    dashboard.html
+
+    This file defines the front-end layout for the COVID-19 Data Dashboard.
+    It includes:
+    - A dark-themed, visually appealing dashboard using HTML, CSS, and JavaScript.
+    - Filters to allow users to select a state, case type, and the number of top states.
+    - Multiple data visualizations, including:
+        - Case Fatality Ratio Distribution
+        - Correlation Matrix Heatmap
+        - Daily Cases Trend
+        - Top N States by Case Type
+        - Recovery Rate Distribution
+        - Active vs. Confirmed Cases Scatter Plot
+    - AJAX functionality to dynamically update charts without reloading the page.
+
+    Author: [Aquil Iqbal]
+    Email : [aquiliqbal14@gmail.com]
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>COVID-19 Dashboard</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+                /* Dark Theme Background */
+                body {
+                        font-family: 'Poppins', sans-serif;
+                        background: linear-gradient(135deg, #0a192f, #16213e);
+                        color: white;
+                        margin: 0;
+                        padding: 0;
+                        text-align: center;
+                }
+
+                /* Dashboard Title */
+                h1 {
+                        font-size: 2.2rem;
+                        margin: 25px 0;
+                        text-transform: uppercase;
+                        font-weight: 700;
+                        letter-spacing: 1px;
+                }
+
+                /* Filters Section */
+                .filters {
+                        background: rgba(24, 32, 54, 0.95);
+                        padding: 15px 25px;
+                        border-radius: 12px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+                        flex-wrap: wrap;
+                        margin: 20px auto;
+                        width: 85%;
+                        box-shadow: 0 5px 12px rgba(255, 255, 255, 0.08);
+                }
+
+                /* Select, Input, Button Styling */
+                select,
+                input,
+                button {
+                        padding: 10px 14px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 6px;
+                        outline: none;
+                }
+
+                select,
+                input {
+                        background: #1b2735;
+                        color: white;
+                        border: 1px solid #334155;
+                }
+
+                button {
+                        background: #e11d48;
+                        color: white;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: all 0.3s ease-in-out;
+                        border: 1px solid #ef4444;
+                }
+
+                button:hover {
+                        background: #be123c;
+                        transform: scale(1.07);
+                        box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.4);
+                }
+
+                /* Chart Container */
+                .container {
+                        width: 90%;
+                        margin: auto;
+                }
+
+                /* Improved Chart Grid Layout */
+                .chart-container {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                        gap: 20px;
+                        justify-content: center;
+                        padding: 10px;
+                }
+
+                /* Individual Chart Styling */
+                .chart {
+                        padding: 12px;
+                        background: rgba(255, 255, 255, 0.1);
+                        backdrop-filter: blur(8px);
+                        border-radius: 10px;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                        transition: transform 0.3s ease-in-out;
+                        text-align: center;
+                }
+
+                /* Hover Effect */
+                .chart:hover {
+                        transform: translateY(-3px);
+                        box-shadow: 0px 0px 12px rgba(255, 255, 255, 0.2);
+                }
+
+                /* Chart Images */
+                .chart img {
+                        max-width: 100%;
+                        height: auto;
+                        border-radius: 8px;
+                }
+
+                /* Mobile Responsiveness */
+                @media (max-width: 768px) {
+                        .filters {
+                                width: 95%;
+                                flex-direction: column;
+                        }
+
+                        .chart {
+                                width: 100%;
+                        }
+                }
+        </style>
+</head>
+
+<body>
+
+        <h1>COVID-19 Data Dashboard</h1>
+
+        <!-- Filters -->
+        <div class="filters">
+                <label for="state">Select State:</label>
+                <select id="state">
+                        <option value="">All States</option>
+                        {% for state in states %}
+                        <option value="{{ state }}">{{ state }}</option>
+                        {% endfor %}
+                </select>
+
+                <label for="caseType">Case Type:</label>
+                <select id="caseType">
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Deaths">Deaths</option>
+                        <option value="Recovered">Recovered</option>
+                        <option value="Active">Active</option>
+                </select>
+
+                <label for="topN">Top N States:</label>
+                <input type="number" id="topN" value="10" min="1" max="50">
+
+                <button id="updateBtn">Update Charts</button>
+        </div>
+
+        <!-- Charts -->
+        <div class="container">
+                <div class="chart-container">
+                        <div class="chart">
+                                <h3>Case Fatality Ratio</h3>
+                                <img id="caseFatalityChart" src="{{ case_fatality_chart }}"
+                                        alt="Case Fatality Ratio Chart">
+                        </div>
+                        <div class="chart">
+                                <h3>Correlation Matrix</h3>
+                                <img id="correlationMatrixChart" src="{{ correlation_matrix_chart }}"
+                                        alt="Correlation Matrix Chart">
+                        </div>
+                        <div class="chart">
+                                <h3>Daily Cases Trend</h3>
+                                <img id="dailyCasesChart" src="{{ daily_cases_chart }}" alt="Daily Cases Chart">
+                        </div>
+                        <div class="chart">
+                                <h3>Top States by Cases</h3>
+                                <img id="topNStatesChart" src="{{ top_n_states_chart }}" alt="Top N States Chart">
+                        </div>
+                        <div class="chart">
+                                <h3>Recovery Rate</h3>
+                                <img id="recoveryRateChart" src="{{ recovery_rate_chart }}" alt="Recovery Rate Chart">
+                        </div>
+                        <div class="chart">
+                                <h3>Active vs. Confirmed Cases</h3>
+                                <img id="activeVsConfirmedChart" src="{{ active_vs_confirmed_chart }}"
+                                        alt="Active vs Confirmed Cases">
+                        </div>
+                </div>
+        </div>
+
+        <!-- JavaScript for AJAX Updates -->
+        <script>
+                $(document).ready(function () {
+                        $("#updateBtn").click(function () {
+                                let state = $("#state").val();
+                                let caseType = $("#caseType").val();
+                                let topN = $("#topN").val();
+
+                                $.ajax({
+                                        url: "{% url 'update_charts' %}",
+                                        type: "GET",
+                                        data: { state: state, case_type: caseType, top_n: topN },
+                                        success: function (data) {
+                                                if (data.case_fatality_chart) {
+                                                        $("#caseFatalityChart").attr("src", data.case_fatality_chart);
+                                                }
+                                                if (data.correlation_matrix_chart) {
+                                                        $("#correlationMatrixChart").attr("src", data.correlation_matrix_chart);
+                                                }
+                                                if (data.daily_cases_chart) {
+                                                        $("#dailyCasesChart").attr("src", data.daily_cases_chart);
+                                                }
+                                                if (data.top_n_states_chart) {
+                                                        $("#topNStatesChart").attr("src", data.top_n_states_chart);
+                                                }
+                                                if (data.recovery_rate_chart) {
+                                                        $("#recoveryRateChart").attr("src", data.recovery_rate_chart);
+                                                }
+                                                if (data.active_vs_confirmed_chart) {
+                                                        $("#activeVsConfirmedChart").attr("src", data.active_vs_confirmed_chart);
+                                                }
+                                        }
+                                });
+                        });
+                });
+        </script>
+
+</body>
+
+</html>

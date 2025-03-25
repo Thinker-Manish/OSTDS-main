@@ -1,0 +1,4 @@
+assign1_covid/data
+logs
+*__pycache__
+py39
